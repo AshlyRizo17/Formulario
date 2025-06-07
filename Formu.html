@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Mi Primer Formulario HTML</title>
+  <link rel="stylesheet" href="formu.css">
+
+</head>
+<body>
+  <div class="container">
+    <h1>📝 Formulario de Registro</h1>
+
+    <form id="miFormulario">
+      <div class="form-group">
+        <label for="nombre">Nombre completo:</label>
+        <input type="text" id="nombre" name="nombre" required placeholder="Escribe tu nombre completo" autofocus pattern="[A-Za-z ]{3,40}" />
+      </div>
+
+      <div class="form-group">
+        <label for="email">Correo electrónico:</label>
+        <input type="email" id="email" name="email" required placeholder="ejemplo@correo.com" />
+      </div>
+
+      <div class="form-group">
+        <label for="edad">Edad:</label>
+        <input type="number" id="edad" name="edad" min="18" max="100" required placeholder="Tu edad" autofocus pattern="{18,70}" />
+      </div>
+
+      <div class="form-group">
+        <label for="color">Color favorito:</label>
+        <input type="color" id="color" name="color">
+     </div>
+
+     <div class="form-group">
+        <label for="fecha">Fecha de nacimiento:</label>
+        <input type="date" id="fecha" name="fecha">
+     </div>
+     <div class="form-group">
+        <label for="portafolio">Portafolio / Sitio web:</label>
+        <input type="url" id="portafolio" name="portafolio" required placeholder="Portafolio de estudio"autofocus pattern="[A-Za-z ]{3,4000}">
+     </div>
+     <div class="form-group">
+        <label for="password">Contraseña:</label>
+        <input type="password" id="password" name="password" required placeholder="Crea una contraseña segura" autofocus pattern="[A-Za-z ]{8,15}" />
+      </div>
+      
+      <div class="form-group">
+        <label for="telefono">Teléfono:</label>
+        <input type="tel" id="telefono" name="telefono" placeholder="Número de contacto" pattern="[0-9]{7,15}" />
+      </div>
+      
+      <div class="form-group">
+        <label for="archivo">Subir archivo (CV):</label>
+        <input type="file" id="archivo" name="archivo" />
+      </div>
+      
+      <div class="form-group">
+        <label for="hora">Hora de contacto preferida:</label>
+        <input type="time" id="hora" name="hora" />
+      </div>
+
+      <div class="form-group">
+        <label for="mesInicio">Mes de inicio en programación:</label>
+        <input type="month" id="mesInicio" name="mesInicio">
+      </div>
+    <div class="form-group">
+        <label for="sitioWeb">Sitio web:</label>
+        <input type="url" id="sitioWeb" name="sitioWeb"
+         placeholder="https://ejemplo.com"
+         required>
+    </div>
+    
+      
+      <div class="form-group">
+        <label for="ciudad">Ciudad:</label>
+        <select id="ciudad" name="ciudad" required>
+          <option value="">Selecciona tu ciudad</option>
+          <option value="bogota">Bogotá</option>
+          <option value="medellin">Medellín</option>
+          <option value="cali">Cali</option>
+          <option value="barranquilla">Barranquilla</option>
+          <option value="otra">Otra</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label>Experiencia en programación:</label>
+        <input type="radio" id="principiante" name="experiencia" value="principiante" required />
+        <label for="principiante">Principiante</label>
+
+        <input type="radio" id="intermedio" name="experiencia" value="intermedio" />
+        <label for="intermedio">Intermedio</label>
+
+        <input type="radio" id="avanzado" name="experiencia" value="avanzado" />
+        <label for="avanzado">Avanzado</label>
+      </div>
+
+      
+
+      <div class="form-group">
+        <label for="comentarios">Comentarios adicionales:</label>
+        <textarea id="comentarios" name="comentarios" rows="4" placeholder="Cuéntanos algo más sobre ti (opcional)"></textarea>
+      </div>
+
+      <div class="form-group">
+        <input class="input_2" type="checkbox" id="acepto" name="acepto" required />
+        <label for="acepto">Acepto los términos y condiciones</label>
+      </div>
+
+      <button type="submit">🚀 Enviar Formulario</button>
+      <button type="button" id="limpiarFormulario" style="background-color: #3a7067;">🗑️ Limpiar Formulario</button>
+    </form>
+
+    <div id="resultado">
+      <h3>✅ ¡Formulario enviado exitosamente!</h3>
+      <p>Estos son los datos que enviaste:</p>
+      <div id="datosEnviados"></div>
+    </div>
+  </div>
+
+  <script>
+    document.getElementById('miFormulario').addEventListener('submit', function (evento) {
+      evento.preventDefault();
+
+      const formulario = evento.target;
+      const datosFormulario = new FormData(formulario);
+
+      let datosHTML = '';
+
+      for (let [campo, valor] of datosFormulario.entries()) {
+        let nombreCampo = campo;
+        switch (campo) {
+          case 'nombre': nombreCampo = 'Nombre completo'; break;
+          case 'email': nombreCampo = 'Correo electrónico'; break;
+          case 'edad': nombreCampo = 'Edad'; break;
+          case 'color': nombreCampo = 'Color favorito:'; break;
+          case 'fecha': nombreCampo = 'Fecha de nacimiento:'; break; 
+          case 'portafolio': nombreCampo = 'Portafolio / Sitio web:'; break;
+          case 'password': nombreCampo = 'Contraseña'; break;
+          case 'telefono': nombreCampo = 'Teléfono'; break;
+          case 'archivo': nombreCampo = 'Archivo'; break;
+          case 'hora': nombreCampo = 'Hora de contacto'; break;
+          case 'mesInicio': nombreCampo = 'Mes de inicio en programación'; break;
+          case 'proyectos': nombreCampo = 'Proyectos completados'; break;
+          case 'ciudad': nombreCampo = 'Ciudad'; break;
+          case 'experiencia': nombreCampo = 'Experiencia en programación'; break;
+          case 'acepto': nombreCampo = 'Términos aceptados'; valor = 'Sí'; break;
+          case 'comentarios': nombreCampo = 'Comentarios'; break;
+        }
+
+        if (valor && valor.trim() !== '') {
+          datosHTML += `
+            <div class="dato">
+              <span class="etiqueta">${nombreCampo}:</span> ${valor}
+            </div>
+          `;
+        }
+      }
+
+      document.getElementById('datosEnviados').innerHTML = datosHTML;
+      document.getElementById('resultado').style.display = 'block';
+      document.getElementById('resultado').scrollIntoView({ behavior: 'smooth' });
+
+      alert('¡Formulario enviado correctamente! 🎉\nRevisa los datos más abajo.');
+    });
+
+    document.getElementById('limpiarFormulario').addEventListener('click', function () {
+      document.getElementById('miFormulario').reset();
+      document.getElementById('resultado').style.display = 'none';
+    });
+  </script>
+</body>
+</html>
